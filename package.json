@@ -1,0 +1,33 @@
+{
+  "name": "Expressen",
+  "version": "1.0.1",
+  "description": "Guess the Expression",
+  "keywords": [
+    "OpenShift",
+    "Node.js",
+    "application",
+    "openshift"
+  ],
+  "author": {
+    "name": "Ben Kaiser",
+    "email": "benjaminjkaiser@gmail.com",
+    "url":  "http://xpressen.com"
+  },
+  "homepage": "http://www.expressen.com",
+  "engines": {
+    "node": ">= 0.6.0",
+    "npm": ">= 1.0.0"
+  },
+
+  "dependencies": {
+    "express.io":       "*",
+    "mongodb":          "*",
+    "mongoose":         "*",
+    "socket.io":        "*",
+    "swig":             "*"
+  },
+
+  "private": true,
+  "main": "server.js"
+}
+

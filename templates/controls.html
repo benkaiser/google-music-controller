@@ -1,0 +1,23 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Google Music Controller{% endblock %}
+
+{% block content %}
+<div class="container" id="main-content">
+  <div class="text-center">
+    <h1>Google Music Controller</h1>
+    <p>Currently controlling user: <span id="user-display"></span></p>
+    <button id="prev" class="btn btn-info"><i class="icon-4x icon-fast-backward"></i></button>
+    <button id="play" class="btn btn-primary"><i class="icon-4x icon-play"></i></button>
+    <button id="next" class="btn btn-info"><i class="icon-4x icon-fast-forward"></i></button>
+  </div>
+</div>
+{% if user %}
+<script type="text/javascript">
+  user = "{{ user }}";
+</script>
+{% endif %}
+{% endblock %}
+{% block scripts %}
+<script type="text/javascript" src="/static/js/controls.js"></script>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Google Music Controller{% endblock %}
+
+{% block content %}
+<div class="container" id="main-content">
+  <div class="text-left">
+    <h1>Test Page For Google Music Controller</h1>
+    <p>Currently testing for user: <span id="user-display"></span></p>
+    <pre><code id="output"></code></pre>
+  </div>
+</div>
+{% if user %}
+<script type="text/javascript">
+  user = "{{ user }}";
+</script>
+{% endif %}
+{% endblock %}
+{% block scripts %}
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/0.9.16/socket.io.min.js"></script>
+<script type="text/javascript" src="/static/js/test.js"></script>
+{% endblock %}
