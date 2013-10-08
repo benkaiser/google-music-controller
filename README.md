@@ -26,4 +26,4 @@ Option 2 - by hitting url's
 ```
 http://localhost:3000/yourgmail@gmail.com/<command>
 ```
-where <command> is either 'prev', 'play' or 'next'. (currently only supporting play/pause under the one button);
+where `<command>` is either 'prev', 'play' or 'next'. (currently only supporting play/pause under the one button);
