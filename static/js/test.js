@@ -4,7 +4,7 @@ var logs = [];
 // show the user
 $("#user-display").html(user);
 // soccet connection and events
-var socket = io.connect('http://localhost:3000/', {
+var socket = io.connect('//localhost:3000/', {
   'max reconnection attempts': Infinity
 });
 socket.emit('subscribe', { user: user });
