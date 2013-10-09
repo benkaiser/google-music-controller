@@ -1,8 +1,15 @@
 var express  = require('express.io');
 var swig  = require('swig');
 var mongoose = require('mongoose');
+var fs = require('fs')
 var Schema = mongoose.Schema;
 mongoose.connect('mongodb://localhost/googlemusic');
+
+// ssl options
+options = {
+    key: fs.readFileSync(__dirname + '/ssl/key'),
+    cert: fs.readFileSync(__dirname + '/ssl/cert')
+}
 
 //*** DEFINED CONSTANTS ***//
 
@@ -17,7 +24,7 @@ function Server(){
   self.init = function(callback){
     // create the app and the routes
     self.app = express();
-    self.app.http().io();
+    self.app.https(options).io();
     self.createRoutes();
     // configure app to parse data
     self.app.configure(function(){
