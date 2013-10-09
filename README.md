@@ -4,7 +4,7 @@ Google Music Controller
 This is the open source code for a google play music administration server (for controlling of music from other devices and through a generic api).
 
 * Step 1 - Run the server with `node server.js` and the PEM passphrase `google`.
-* Step 2 - Install the chrome plugin.
+* Step 2 - Install the chrome plugin (by visiting chrome://extensions in chrome and selecting 'Load unpacked extension...' and selecting the chrome-app folder.
 * Step 3 - Reload google play music in chrome and point it to the server.
 * Step 4 - Control your music from your couch, or anywhere!
 
