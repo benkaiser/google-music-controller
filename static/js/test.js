@@ -4,10 +4,12 @@ var logs = [];
 // show the user
 $("#user-display").html(user);
 // soccet connection and events
-var socket = io.connect('//localhost:3000/', {
-  'max reconnection attempts': Infinity
+var socket = io.connect('https://localhost:3000');
+socket.on('connect', function(){
+  console.log("Connected");
+  socket.emit('subscribe', { user: user });
 });
-socket.emit('subscribe', { user: user });
+
 socket.on('control', function (data) {
   time = new Date().getTime();
   diff = (time-loadTime)/1000.0;

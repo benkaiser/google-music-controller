@@ -24,7 +24,8 @@
     "mongodb":          "*",
     "mongoose":         "*",
     "socket.io":        "*",
-    "swig":             "*"
+    "swig":             "*",
+    "connect":          "*"
   },
 
   "private": true,

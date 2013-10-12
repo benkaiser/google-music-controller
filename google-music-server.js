@@ -1,12 +1,9 @@
 var express  = require('express.io');
 var swig  = require('swig');
-var mongoose = require('mongoose');
-var fs = require('fs')
-var Schema = mongoose.Schema;
-mongoose.connect('mongodb://localhost/googlemusic');
+var fs = require('fs');
 
-// ssl options
-options = {
+// https options
+httpsOptions = {
     key: fs.readFileSync(__dirname + '/ssl/key'),
     cert: fs.readFileSync(__dirname + '/ssl/cert')
 }
@@ -24,7 +21,8 @@ function Server(){
   self.init = function(callback){
     // create the app and the routes
     self.app = express();
-    self.app.https(options).io();
+    self.app.https(httpsOptions).io();
+
     self.createRoutes();
     // configure app to parse data
     self.app.configure(function(){
@@ -33,23 +31,6 @@ function Server(){
     });
     // static pages
     self.app.use("/static", express.static(__dirname + '/static'));
-    // db connection
-    self.app.db = mongoose.connection;
-    self.app.db.on('error', console.error.bind(console, 'connection error:'));
-    self.app.db.once('open', function() {
-      self.setupSchema(callback);
-    });
-
-  }
-  // setup the database schema
-  self.setupSchema = function(callback){
-    self.app.schema = {};
-    self.app.models = {};
-    self.app.schema.ControlLog = new Schema({
-      email: String,
-      control: String
-    });
-    self.app.models.ControlLog = mongoose.model('ControlLog', self.app.schema.ControlLog);
     callback();
   }
   // create all the routes for the server
@@ -63,38 +44,30 @@ function Server(){
     });
     self.app.get(ext + "/:user/:control", function(req, res){
       user = req.params.user;
-      control = req.params.control;
-      var newLog = new self.app.models.ControlLog({email: user, control: control});
-      newLog.save(function(err){
-        if(err){
-          res.send({status: "error"});
-        } else {
-          // send the success
-          res.send({status: "success"});
-          // emit the socket
-          self.app.io.sockets.in(user).emit('control', {control: control});
-        }
-      });
+      control = req.params.control;    
+      // send the success
+      res.send({status: "success"});
+      // emit the socket
+      self.app.io.sockets.in(user).emit('control', {control: control});
     });
     // api and socket functions
     self.app.io.sockets.on('connection', function(socket){
       socket.on('subscribe', function(data){
-        console.log(data.user);
         socket.join(data.user);
       });
-    });
-    self.app.get(ext + "/:user/api/get", function(req, res){
-      user = req.params.user;
-      self.app.models.ControlLog.find({ email: user }, function(err, logs){
-        if(err){
-          res.send({status: "error"});
-        } else {
-          res.send({status: "success", data: logs});
-          // delete all the logs when we have sent them down
-          for (var i = logs.length - 1; i >= 0; i--) {
-            logs[i].remove();
-          };
-        }
+      // recieve from controller
+      socket.on('control', function(data){
+        self.app.io.sockets.in(data.user).emit('control', data);
+      });
+      socket.on('init_controls', function(data){
+        self.app.io.sockets.in(data.user).emit('get_playlists', {});
+      });
+      // recieve from client
+      socket.on('playlists', function(data){
+        self.app.io.sockets.in(data.user + "_controller").emit('playlists', data);
+      });
+      socket.on('songs', function(data){
+        self.app.io.sockets.in(data.user + "_controller").emit('songs', data);        
       });
     });
     // test function
@@ -105,7 +78,11 @@ function Server(){
   }
   // start the server
   this.startServer = function(callback){
+    // run the https server for io
+    self.httpServer = require('http').createServer(self.app);
     self.app.listen(port, callback);
+    express.io.listen(self.httpServer);
+    self.httpServer.listen(port + 1, callback);
   }
 }
 
