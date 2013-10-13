@@ -4,6 +4,7 @@
 
 {% block content %}
 <div class="container" id="main-content">
+  <i class="icon-large icon-refresh btn btn-primary fixed_refresh"></i>
   <div class="text-center">
     <h1>Google Music Controller</h1>
     <p>Currently controlling user: <span id="user-display"></span></p>
@@ -11,14 +12,51 @@
     <button id="play" class="btn btn-primary"><i class="icon-4x icon-play"></i></button>
     <button id="next" class="btn btn-info"><i class="icon-4x icon-fast-forward"></i></button>
   </div>
+  <div class="all_controls row">
+    <div class="col-lg-3" id="playlist_block"></div>
+    <div class="col-lg-9" id="song_block"></div>
+  </div>
 </div>
 {% if user %}
 <script type="text/javascript">
   user = "{{ user }}";
 </script>
 {% endif %}
+{% raw %}
+<script type="text/mustache" id="playlist_template">
+  <h3>Playlists</h3>
+  {{#data}}
+    <div class='btn btn-block btn-primary playlist_btn' data-id='{{id}}'>{{name}}</div>
+  {{/data}}
+</script>
+<script type="text/mustache" id="song_template">
+  <h3>Songs</h3>
+  <table class='table table-hover'>
+  <thead>
+    <tr>
+        <th>Title</th>
+        <th>Album</th>
+        <th>Duration</th>
+        <th>Play Count</th>
+      </tr>
+  </thead>
+  {{#data}}
+    <tr class='song_tr' data-id='{{id}}'>
+      <td>{{title}}</td>
+      <td>{{album}}</td>
+      <td>{{duration}}</td>
+      <td>{{play_count}}</td>
+    </tr>
+  {{/data}}
+  </table>
+</script>
+{% endraw %}
 {% endblock %}
 {% block scripts %}
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.1/underscore-min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.0.0/backbone-min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/backbone.marionette/1.1.0-bundled/backbone.marionette.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mustache.js/0.7.2/mustache.min.js"></script>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/0.9.16/socket.io.min.js"></script>
 <script type="text/javascript" src="/static/js/controls.js"></script>
 {% endblock %}

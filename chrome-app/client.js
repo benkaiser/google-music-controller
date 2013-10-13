@@ -28,6 +28,9 @@ $(document).ready(function(){
     } else if (data.control == "playlist"){
       $("[data-id='" + data.value + "']").click();
       setTimeout(send_songs, 1000);
+    } else if (data.control == "song"){
+      play_song(data.value);
+      
     }
     console.log(data);
   });
@@ -73,4 +76,16 @@ function get_song_info(item){
     album: item.children("[data-col='album']").text(),
     play_count: item.children("[data-col='play-count']").text()
   };
+}
+
+// page control
+function play_song(id){
+  // grab the element
+  song_tr = $("[data-id='" + id + "']");
+  // make the button to be clicked
+  song_tr.find('span').first().prepend("<div class='hover-button tmp_click' data-id='play'></div>");
+  // click the button
+  $(".tmp_click").click();
+  // remove the button
+  $(".tmp_click").remove();
 }
