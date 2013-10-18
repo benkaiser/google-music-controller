@@ -17,7 +17,6 @@ socket.on('playlists', function(data){
   PlayMusicControllerApp.playlist_region.show(playlistView);
 });
 socket.on('songs', function(data){
-  console.log(data);
   songs = data.songs;
   songView = new SongView();
   PlayMusicControllerApp.song_region.show(songView);
