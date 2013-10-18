@@ -79,10 +79,7 @@ function Server(){
   // start the server
   this.startServer = function(callback){
     // run the https server for io
-    self.httpServer = require('http').createServer(self.app);
     self.app.listen(port, callback);
-    express.io.listen(self.httpServer);
-    self.httpServer.listen(port + 1, callback);
   }
 }
 
