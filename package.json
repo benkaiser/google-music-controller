@@ -21,11 +21,7 @@
 
   "dependencies": {
     "express.io":       "*",
-    "mongodb":          "*",
-    "mongoose":         "*",
-    "socket.io":        "*",
-    "swig":             "*",
-    "connect":          "*"
+    "swig":             "*"
   },
 
   "private": true,
