@@ -1,3 +1,8 @@
+// Setup messenger
+Messenger.options = {
+    extraClasses: 'messenger-fixed messenger-on-bottom messenger-on-right',
+    theme: 'air'
+}
 // Data Controls
 var playlists = [];
 var songs = [];
@@ -26,21 +31,26 @@ $(document).ready(function(){
   $("#user-display").html(user);
 
   $("#play").click(function(){
-    sendRequest("play", "state");
+    sendRequest("play", "state", "Toggling Play State");
   });
   $("#next").click(function(){
-    sendRequest("next", "state");
+    sendRequest("next", "state", "Playing to next song.");
   });
   $("#prev").click(function(){
-    sendRequest("prev", "state");
+    sendRequest("prev", "state", "Playing previous song.");
   });
   $(".fixed_refresh").click(function(){
     socket.emit('init_controls', { user: user});
   });
 });
 
-function sendRequest(control, type){
+function sendRequest(control, type, human_readable){
+  human_readable = human_readable || "Sending control.";
   socket.emit("control", {control: type, value: control, user: user});
+  Messenger().post({
+    message: human_readable,
+    type: 'success'
+  });
 }
 
 
@@ -66,7 +76,7 @@ var PlaylistView = Backbone.View.extend({
   },
   playlist_clicked: function(event){
     id = $(event.currentTarget).attr("data-id");
-    sendRequest(id, "playlist");
+    sendRequest(id, "playlist", "Changing playlist.");
   }
 });
 
@@ -80,7 +90,7 @@ var SongView = Backbone.View.extend({
   },
   song_clicked: function(event){
     id = $(event.currentTarget).attr("data-id");
-    sendRequest(id, "song");
+    sendRequest(id, "song", "Playing song.");
   }
 });
 

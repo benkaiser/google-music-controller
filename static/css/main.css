@@ -17,3 +17,27 @@ body, html{
 .all_controls{
   margin-top: 20px;
 }
+.album-small{
+  width: 50px;
+  height: 50px;
+}
+.no-padding{
+  padding: 0px !important;
+}
+.explicit{
+  display: inline-block;
+  vertical-align: top;
+  color: #ff3300;
+  font-size: 9px;
+  font-weight: 500;
+  text-transform: uppercase;
+  text-indent: 0;
+  height: 15px;
+  line-height: 15px;
+  border-style: solid;
+  border-width: 1px;
+  margin: 3px 0;
+  padding: 0 3px 0 3px;
+  border-radius: 2px;
+  float: right;
+}
