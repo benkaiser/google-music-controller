@@ -4,7 +4,7 @@ var logs = [];
 // show the user
 $("#user-display").html(user);
 // soccet connection and events
-var socket = io.connect('https://localhost:3000');
+var socket = io.connect('https://'+window.location.hostname+':3000');
 socket.on('connect', function(){
   console.log("Connected");
   socket.emit('subscribe', { user: user });
