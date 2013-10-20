@@ -1,0 +1,9 @@
+This is a library that allows you to remote control Google Play Music(TM).
+Steps after installing:
+1 - Visit https://xpressen.com:3000/ and if a warning pops up, click "I accept the risks". (This is just because I cannot afford to purchase a paid ssl certificate for a free service I am providing).
+2 - Reload Google Play Music in your Google Chrome Browser (to make sure this library loads). And it should print a url for you to go to in order to control your music. This is in the top right of the page next to the settings icon and should look like this:  https://xpressen.com:3000/gpm/your_gmail@gmail.com/control
+3 - Control your music!
+
+For any help please email me: ben (at) kaiserapps (dot) com 
+
+Google Play Music is a trademark of Google Inc.
