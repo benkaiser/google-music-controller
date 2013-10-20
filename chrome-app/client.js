@@ -94,6 +94,7 @@ function get_song_info(item){
     id: item.attr('data-id'),
     title: item.find("[data-col='title'] .content").text(),
     is_explicit: (item.find(".explicit").length > 0),
+    is_playing: (item.hasClass("currently-playing")),
     duration: item.children("[data-col='duration']").text(),
     artist: item.children("[data-col='artist']").text(),
     album: item.children("[data-col='album']").text(),

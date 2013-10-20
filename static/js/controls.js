@@ -90,9 +90,28 @@ var SongView = Backbone.View.extend({
   },
   song_clicked: function(event){
     id = $(event.currentTarget).attr("data-id");
+    idx = get_song_index(id);
+    set_playing_song(idx);
     sendRequest(id, "song", "Playing song.");
+    this.render();
   }
 });
+
+// data functions
+function get_song_index(id){
+  for (var i = songs.length - 1; i >= 0; i--) {
+    if(songs[i].id == id){
+      return i;
+    }
+  }
+  return null;
+}
+function set_playing_song(idx){
+  for (var i = songs.length - 1; i >= 0; i--) {
+    songs[i].is_playing = false;
+  };
+  songs[idx].is_playing = true;
+}
 
 // finally start the app (call all the initializers)
 PlayMusicControllerApp.start();

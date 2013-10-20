@@ -42,7 +42,7 @@
       </tr>
   </thead>
   {{#data}}
-    <tr class='song_tr' data-id='{{id}}'>
+    <tr class='song_tr {{#is_playing}}success{{/is_playing}}' data-id='{{id}}'>
       <td class='no-padding'><img class='album-small' src='{{cover}}'/></td>
       <td>
       {{#is_explicit}}
