@@ -2,23 +2,16 @@ var express  = require('express.io');
 var swig  = require('swig');
 var fs = require('fs');
 
-exports.Server = function(httpsOptions, port, ext){
+exports.Server = function(app, ext){
   var self = this;
-  self.httpsOptions = httpsOptions || {};
-  self.port = port || 3000;
+  self.app = app || "error";
   self.ext = ext || "";
   // create the app and connect to the database
   self.init = function(callback){
     // create the app and the routes
-    self.app = express();
-    self.app.https(self.httpsOptions).io();
-
     self.createRoutes();
     // configure app to parse data
-    self.app.configure(function(){
-      self.app.use(express.cookieParser());
-      self.app.use(express.bodyParser());
-    });
+
     // static pages
     self.app.use("/static", express.static(__dirname + '/static'));
     callback();
@@ -65,10 +58,5 @@ exports.Server = function(httpsOptions, port, ext){
       user = req.params.user;
       res.send(swig.renderFile(__dirname + "/templates/test.html", {user: user}));
     });
-  }
-  // start the server
-  this.startServer = function(callback){
-    // run the https server for io
-    self.app.listen(self.port, callback);
   }
 }

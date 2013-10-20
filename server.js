@@ -9,10 +9,20 @@ httpsOptions = {
     cert: fs.readFileSync(__dirname + '/ssl/cert')
 }
 
-// run the class
-var s = new gms.Server(httpsOptions, 3000);
+app = express();
+app.https(httpsOptions).io();
+
+app.configure(function(){
+  app.use(express.cookieParser());
+  app.use(express.bodyParser());
+});
+
+port = 3000;
+
+// run the module
+var s = new gms.Server(app);
 s.init(function(){
-  s.startServer(function(err){
-    console.log("Server running!");
+  app.listen(port, function(){
+    console.log("server is running");
   });
 });
