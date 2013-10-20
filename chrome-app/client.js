@@ -4,13 +4,13 @@ $(document).ready(function(){
   // get the user
   user = $(".gbps2").html();
   // secure url for socket connect, use should go to http so they don't get scary warning
-  sec_url = "https://localhost:3000/";
-  url = "http://localhost:3001/";
+  url = "https://localhost:3000/";
+  ext = "";
   // controls url
-  con_url = url + user + "/controls";
+  con_url = url + ext + user + "/controls";
   $("<p class='con_url'>Control your server at "+con_url+"</p>").prependTo("#action_bar_container");
   // soccet connection and events
-  socket = io.connect(sec_url);
+  socket = io.connect(url);
   socket.on('connect', function () {
     console.log("Connected and recieving as user: " + user);
     socket.emit('subscribe', { user: user });
@@ -36,7 +36,24 @@ $(document).ready(function(){
   });
   socket.on('get_playlists', send_playlists);
   socket.on('get_songs', send_songs);
+  socket.on('get_state', send_state);
 });
+
+// state functions
+function send_state(){
+  state = get_state();
+  socket.emit('state', {user: user, state: state});
+}
+function get_state(){
+  return {
+    playing:      $("[data-id='play-pause']").hasClass('playing'),
+    current_time: $("#time_container_current").text(),
+    song_title:   $("#playerSongTitle").text(),
+    artist:       $("#player-artist").text(),
+    album:        $(".player-album").text(),
+    cover:        $("#playingAlbumArt").attr("src")
+  };
+}
 
 // playlist functions
 function send_playlists(){
@@ -62,19 +79,26 @@ function send_songs(){
 }
 function get_songs(){
   data = [];
-  $(".song-table tbody > tr").each(function(){
+  $(".song-table tbody > .song-row").each(function(){
     data.push(get_song_info($(this)));
   });
   return data;
 }
 function get_song_info(item){
+  var img_item = item.find("img").attr("src");
+  var img_string = "";
+  if(img_item !== undefined){
+    img_string = img_item.substr(0, img_item.indexOf("="));
+  }
   return {
     id: item.attr('data-id'),
-    title: item.children("[data-col='title']").text(),
+    title: item.find("[data-col='title'] .content").text(),
+    is_explicit: (item.find(".explicit").length > 0),
     duration: item.children("[data-col='duration']").text(),
     artist: item.children("[data-col='artist']").text(),
     album: item.children("[data-col='album']").text(),
-    play_count: item.children("[data-col='play-count']").text()
+    play_count: item.children("[data-col='play-count']").text(),
+    cover: img_string
   };
 }
 
