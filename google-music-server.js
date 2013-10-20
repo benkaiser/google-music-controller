@@ -2,26 +2,16 @@ var express  = require('express.io');
 var swig  = require('swig');
 var fs = require('fs');
 
-// https options
-httpsOptions = {
-    key: fs.readFileSync(__dirname + '/ssl/key'),
-    cert: fs.readFileSync(__dirname + '/ssl/cert')
-}
-
-//*** DEFINED CONSTANTS ***//
-
-ext = ""; // extension after the tld to run the server at. eg. '/hi', would run the server at localhost/hi/
-port = 3000; // port to run on
-
-//*** END CONSTANTS ***///
-
-function Server(){
+exports.Server = function(httpsOptions, port, ext){
   var self = this;
+  self.httpsOptions = httpsOptions || {};
+  self.port = port || 3000;
+  self.ext = ext || "";
   // create the app and connect to the database
   self.init = function(callback){
     // create the app and the routes
     self.app = express();
-    self.app.https(httpsOptions).io();
+    self.app.https(self.httpsOptions).io();
 
     self.createRoutes();
     // configure app to parse data
@@ -35,14 +25,14 @@ function Server(){
   }
   // create all the routes for the server
   self.createRoutes = function(callback){
-    self.app.get(ext + "/", function(req, res){
+    self.app.get(self.ext + "/", function(req, res){
       res.send("Server is running.");
     });
-    self.app.get(ext + "/:user/controls", function(req, res){
+    self.app.get(self.ext + "/:user/controls", function(req, res){
       user = req.params.user;
       res.send(swig.renderFile(__dirname + "/templates/controls.html", {user: user}));
     });
-    self.app.get(ext + "/:user/:control", function(req, res){
+    self.app.get(self.ext + "/:user/:control", function(req, res){
       user = req.params.user;
       control = req.params.control;    
       // send the success
@@ -71,7 +61,7 @@ function Server(){
       });
     });
     // test function
-    self.app.get(ext + "/:user/api/test", function(req, res){
+    self.app.get(self.ext + "/:user/api/test", function(req, res){
       user = req.params.user;
       res.send(swig.renderFile(__dirname + "/templates/test.html", {user: user}));
     });
@@ -79,14 +69,6 @@ function Server(){
   // start the server
   this.startServer = function(callback){
     // run the https server for io
-    self.app.listen(port, callback);
+    self.app.listen(self.port, callback);
   }
 }
-
-// run the class
-var s = new Server();
-s.init(function(){
-  s.startServer(function(){
-    console.log("Server running!");
-  });
-});
