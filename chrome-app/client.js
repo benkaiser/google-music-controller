@@ -2,7 +2,7 @@ var socket = null;
 
 $(document).ready(function(){
   // get the user
-  user = $(".gbps2").html();
+  user = $(".gb_T").html();
   // secure url for socket connect, use should go to http so they don't get scary warning
   url = "https://localhost:3000/";
   ext = "";

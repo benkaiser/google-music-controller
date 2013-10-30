@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Play Music Remote - Client",
   "description": "Client script that connects to an external server, allowing control of Google Play Music(TM).",
-  "version": "0.1",
+  "version": "0.1.2",
   "content_scripts": [
     {
       "matches": ["https://play.google.com/music/*"],
