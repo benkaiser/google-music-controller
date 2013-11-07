@@ -1,12 +1,9 @@
 {
-  "name": "Expressen",
+  "name": "Google Music Controller",
   "version": "1.0.1",
-  "description": "Guess the Expression",
+  "description": "Control Google Play Music from a remote client",
   "keywords": [
-    "OpenShift",
-    "Node.js",
-    "application",
-    "openshift"
+    "Google Play Music"
   ],
   "author": {
     "name": "Ben Kaiser",
@@ -18,12 +15,10 @@
     "node": ">= 0.6.0",
     "npm": ">= 1.0.0"
   },
-
   "dependencies": {
     "express.io":       "*",
     "swig":             "*"
   },
-
   "private": true,
   "main": "server.js"
 }
