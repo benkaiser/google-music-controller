@@ -2,7 +2,7 @@ var socket = null;
 
 $(document).ready(function(){
   // get the user
-  seruser = $(".gb_T").html();
+  user = $(".gb_T").html();
   // secure url for socket connect, use should go to http so they don't get scary warning
   url = "https://localhost:3000/";
   ext = "";
@@ -69,7 +69,7 @@ function get_playlists(){
       name: $(this).find(':nth-child(2)').html(),
       id: $(this).attr('id')
     };
-    data.push(item);
+    data.playlists.push(item);
   });
   data.autoplaylists = [];
   $("#auto-playlists > li").each(function(){
