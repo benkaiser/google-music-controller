@@ -4,6 +4,12 @@ Steps after installing:
 2 - Reload Google Play Music in your Google Chrome Browser (to make sure this library loads). And it should print a url for you to go to in order to control your music. This is in the top right of the page next to the settings icon and should look like this:  https://xpressen.com:3000/gpm/your_gmail@gmail.com/control
 3 - Control your music!
 
-For any help please email me: ben (at) kaiserapps (dot) com 
+For any help please email me: benjaminjkaiser@gmail.com
+
+** CHANGE LOG ***
+Version 0.1.3:
+ - Add support for auto playlists (i.e. thumbs up, last added, etc).
+Version 0.1.1 - 0.1.2:
+ - Fix bugs with Google changing Google Play Music(TM), removing the way I was previously fetching the user's gmail (to make the url a unique identifier). 
 
 Google Play Music is a trademark of Google Inc.
