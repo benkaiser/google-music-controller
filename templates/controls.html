@@ -24,8 +24,12 @@
 {% endif %}
 {% raw %}
 <script type="text/mustache" id="playlist_template">
+  <h3>Auto Playlists</h3>
+    {{#data.autoplaylists}}
+      <div class='btn btn-block btn-primary playlist_btn' data-id='{{id}}'>{{name}}</div>
+    {{/data.autoplaylists}}
   <h3>Playlists</h3>
-  {{#data}}
+  {{#data.playlists}}
     <div class='btn btn-block btn-primary playlist_btn' data-id='{{id}}'>{{name}}</div>
   {{/data}}
 </script>
