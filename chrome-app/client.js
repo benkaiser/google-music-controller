@@ -2,7 +2,7 @@ var socket = null;
 
 $(document).ready(function(){
   // get the user
-  user = $(".gb_T").html();
+  user = $("#oneGoogleWrapper a[title^='Account']").attr('title').replace(/[\s\S]*\(([^)]+?)\)[\s\S]*/, '$1');
   // secure url for socket connect, use should go to http so they don't get scary warning
   url = "https://localhost:3000/";
   ext = "";
@@ -30,7 +30,7 @@ $(document).ready(function(){
       setTimeout(send_songs, 1000);
     } else if (data.control == "song"){
       play_song(data.value);
-      
+
     }
     console.log(data);
   });
